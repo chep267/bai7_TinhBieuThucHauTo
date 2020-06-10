@@ -55,34 +55,49 @@ public class TinhBT {
 
 
     //Tinh toan:
-    public static long Tinhhauto(char[] a){
-        long kq = 0;
+
+    public static double Tinhhauto(char[] a){
         Stack st = new Stack();
-        int i =0; int tong = 0, tich =1;
+        int i =0; double tong = 0,  tich =1, kq =0;
         for (i = 0; i < a.length; i++) {
             if(isO(a[i])==0){
                 st.push(a[i]);
             }else{
-                if(a[i]=='*'){
-                    tich = (int)st.pop()* (int)st.pop();
-                    st.push(tich);
+                switch (a[i]) {
+                    case '+' : tong += (double)st.pop()+ (double)st.pop();  st.push(tong); break;
+                    case '-' : tong += (double)st.pop()- (double)st.pop(); st.push(tong); break;
+                    case '*' : tich *= (double)st.pop()* (double)st.pop(); st.push(tich); break;
+                    case '/' : tich *= (double)st.pop()/ (double)st.pop(); st.push(tich); break;
+                    default:
+                        break;
                 }
-                if(a[i]=='/'){
-                    tich = (int)st.pop()/ (int)st.pop();
-                    st.push(tich);
-                }
-                if(a[i]=='+'){
-                    tong = (int)st.pop()+ (int)st.pop();
-                    st.push(tong);
-                }
-                if(a[i]=='-'){
-                    tong = (int)st.pop()- (int)st.pop();
-                    st.push(tong);
-                }
+//                if(isO(a[i])==2){
+//                    if(a[i]=='*'){
+//                        tich = (int)st.pop()* (int)st.pop();
+//                        st.push(tich);
+//                        System.out.print("\n"+tich);
+//                    }
+//                    if(a[i]=='/'){
+//                        tich = (int)st.pop()/ (int)st.pop();
+//                        st.push(tich);
+//                        System.out.print("\n"+tich);
+//                    }
+//                }
+//                if(isO(a[i])==1){
+//                    if(a[i]=='+'){
+//                        tong = (int)st.pop()+ (int)st.pop();
+//                        st.push(tong);
+//                        System.out.print("\n"+tich);
+//                    }
+//                    if(a[i]=='-'){
+//                        tong = (int)st.pop()- (int)st.pop();
+//                        st.push(tong);
+//                        System.out.print("\n"+tich);
+//                    }
+//                }
             }
-
         }
-        kq = tong+tich;
+        kq = (double) st.pop();
         return kq;
     }
 
@@ -97,7 +112,7 @@ public class TinhBT {
         char[] ht = new char[n];
         ht = toHauto(tt);
         System.out.print("\nBT hau to la: "+ Arrays.toString(ht));
-        long kq = Tinhhauto(ht);
+        double kq = Tinhhauto(ht);
         System.out.print("\nGia tri bieu thuc la: "+kq);
     }
 }
