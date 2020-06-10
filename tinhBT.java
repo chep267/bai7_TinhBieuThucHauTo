@@ -57,17 +57,20 @@ public class TinhBT {
     //Tinh toan:
 
     public static double Tinhhauto(char[] a){
-        Stack st = new Stack();
-        int i =0; double tong = 0,  tich =1, kq =0;
+        Stack<Double> st = new Stack<Double>();
+        int i =0; double x = 0, y =1;
+        double kq =0;
+
         for (i = 0; i < a.length; i++) {
             if(isO(a[i])==0){
-                st.push(a[i]);
+                st.push((double) (a[i]-48));
             }else{
+                x=  st.pop(); y= st.pop();
                 switch (a[i]) {
-                    case '+' : tong += (double)st.pop()+ (double)st.pop();  st.push(tong); break;
-                    case '-' : tong += (double)st.pop()- (double)st.pop(); st.push(tong); break;
-                    case '*' : tich *= (double)st.pop()* (double)st.pop(); st.push(tich); break;
-                    case '/' : tich *= (double)st.pop()/ (double)st.pop(); st.push(tich); break;
+                    case '+' : st.push(x+y); break;
+                    case '-' : st.push(x-y); break;
+                    case '*' : st.push(x*y); break;
+                    case '/' : st.push(x/y); break;
                     default:
                         break;
                 }
@@ -97,7 +100,7 @@ public class TinhBT {
 //                }
             }
         }
-        kq = (double) st.pop();
+        kq = st.peek();
         return kq;
     }
 
