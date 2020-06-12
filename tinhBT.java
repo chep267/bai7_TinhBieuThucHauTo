@@ -57,50 +57,27 @@ public class TinhBT {
     //Tinh toan:
 
     public static double Tinhhauto(char[] a){
-        Stack<Double> st = new Stack<Double>();
-        int i =0; double x = 0, y =1;
+        //Stack<Character> stdau = new Stack<Character>(); //luu dau
+        Stack<Double> stso = new Stack<Double>(); //luu so
+        int i =0; double x = 0, y =1; char o;
         double kq =0;
 
         for (i = 0; i < a.length; i++) {
             if(isO(a[i])==0){
-                st.push((double) (a[i]-48));
+                stso.push((double) (a[i]-48) );
             }else{
-                x=  st.pop(); y= st.pop();
+                y = stso.pop(); x= stso.pop();
                 switch (a[i]) {
-                    case '+' : st.push(x+y); break;
-                    case '-' : st.push(x-y); break;
-                    case '*' : st.push(x*y); break;
-                    case '/' : st.push(x/y); break;
+                    case '+' : stso.push(x+y); break;
+                    case '-' : stso.push(x-y); break;
+                    case '*' : stso.push(x*y); break;
+                    case '/' : stso.push(x/y); break;
                     default:
                         break;
                 }
-//                if(isO(a[i])==2){
-//                    if(a[i]=='*'){
-//                        tich = (int)st.pop()* (int)st.pop();
-//                        st.push(tich);
-//                        System.out.print("\n"+tich);
-//                    }
-//                    if(a[i]=='/'){
-//                        tich = (int)st.pop()/ (int)st.pop();
-//                        st.push(tich);
-//                        System.out.print("\n"+tich);
-//                    }
-//                }
-//                if(isO(a[i])==1){
-//                    if(a[i]=='+'){
-//                        tong = (int)st.pop()+ (int)st.pop();
-//                        st.push(tong);
-//                        System.out.print("\n"+tich);
-//                    }
-//                    if(a[i]=='-'){
-//                        tong = (int)st.pop()- (int)st.pop();
-//                        st.push(tong);
-//                        System.out.print("\n"+tich);
-//                    }
-//                }
             }
         }
-        kq = st.peek();
+        kq = stso.peek();
         return kq;
     }
 
