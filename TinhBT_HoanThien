@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Stack;
 
 public class TinhBT {
@@ -83,13 +84,13 @@ public class TinhBT {
     //Tinh toan:
     public static double tinhHauto(ArrayList<String> st) {
 
-        Stack<Integer> stso = new Stack<>(); //luu so
+        Stack<Double> stso = new Stack<>(); //luu so
 
         for (String s : st) {
             if (isOperatorStr(s) == 0) {
-                stso.push(Integer.parseInt(s));
+                stso.push(Double.parseDouble(s));
             } else {
-                int y = stso.pop(), x = stso.pop();
+                double y = stso.pop(), x = stso.pop();
                 switch (s) {
                     case "+":
                         stso.push(x + y);
@@ -109,5 +110,20 @@ public class TinhBT {
             }
         }
         return stso.peek();
+    }
+
+    public static void main(String[] arg) {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhap bieu thuc: ");
+
+        String tt = sc.nextLine();
+        ArrayList<String> ht = toHauto(tt);
+        System.out.print("BT hau to la: ");
+        for (String s : ht) {
+            System.out.print(s + " ");
+        }
+        System.out.println(" ");
+        System.out.println("Gia tri bieu thuc la: " + tinhHauto(ht));
     }
 }
