@@ -1,0 +1,113 @@
+import java.util.ArrayList;
+import java.util.Stack;
+
+public class TinhBT {
+    //Do uu tien:
+    public static int isOperatorStr(String c) {
+        if( c.equals("+") || c.equals("-") ) return 1;
+        if( c.equals("*") || c.equals("/") ) return 2;
+        if( c.equals("(") || c.equals(")") ) return 3;
+        return 0;
+    }
+
+    public static int isOperatorChr(char c) {
+        if( (c == '+') || (c == '-') ) return 1;
+        if( (c == '*') || (c == '/') ) return 2;
+        if( (c == '(') || (c == ')') ) return 3;
+        return 0;
+    }
+
+    public static ArrayList<String> toHauto(String st) {
+
+        Stack<Character> s = new Stack<>();
+        String ht = "";
+        ArrayList<String> out = new ArrayList<>();
+        int dem = 0;
+        for (int i = 0; i < st.length(); i++)
+        {
+            char token = st.charAt(i);
+            if (isOperatorChr(token) == 0) ht += token;
+            else {
+                if(!ht.equals("")) {
+                    out.add(ht);
+                    ht = "";
+                }
+                if(token == '(') {
+                    dem++;
+                    s.push(token);
+                }
+                else {
+                    if (s.empty()) s.push(token);
+                    else  {
+                        char x = s.peek();
+                        if (x == '(') s.push(token);
+                        else {
+                            if (token == ')') {
+                                while (s.peek() != '(') {
+                                    out.add(s.pop().toString());
+                                }
+                                s.pop();
+                                dem--;
+                            }
+                            else {
+                                if (isOperatorChr(token) <= isOperatorChr(x)) {
+                                    if (dem == 0) {
+                                        while (!s.empty()) {
+                                            out.add(s.pop().toString());
+                                        }
+                                    }
+                                    else {
+                                        while (s.peek() != '(') {
+                                            out.add(s.pop().toString());
+                                        }
+                                    }
+                                }
+                                s.push(token);
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        if(!ht.equals("")) {
+            out.add(ht);
+        }
+        while (!s.empty()) {
+            out.add(s.pop().toString());
+        }
+        return out;
+    }
+
+
+    //Tinh toan:
+    public static double tinhHauto(ArrayList<String> st) {
+
+        Stack<Integer> stso = new Stack<>(); //luu so
+
+        for (String s : st) {
+            if (isOperatorStr(s) == 0) {
+                stso.push(Integer.parseInt(s));
+            } else {
+                int y = stso.pop(), x = stso.pop();
+                switch (s) {
+                    case "+":
+                        stso.push(x + y);
+                        break;
+                    case "-":
+                        stso.push(x - y);
+                        break;
+                    case "*":
+                        stso.push(x * y);
+                        break;
+                    case "/":
+                        stso.push(x / y);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return stso.peek();
+    }
+}
