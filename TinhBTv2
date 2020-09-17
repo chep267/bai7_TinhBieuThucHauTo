@@ -32,7 +32,9 @@ public class TinhBieuThuc {
                 s.push(token);
             }
         }
-        ht.append(s.pop());
+        while (!s.empty()) {
+            ht.append(s.pop());
+        }
         return ht.toString();
     }
 
