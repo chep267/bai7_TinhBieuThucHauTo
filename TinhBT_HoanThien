@@ -18,8 +18,52 @@ public class TinhBT {
         return 0;
     }
 
-    public static ArrayList<String> toHauto(String st) {
+    public static String XuLiChuoi(String st) {
+        StringBuilder tt = new StringBuilder(st);
+        int dem = 0;
+        for (int i = 0; i < tt.length(); i++) {
+            if (tt.charAt(i) == '(' && i != 0) {
+                    if (tt.charAt(i + 1) == ')') {
+                        System.out.print("Bieu thuc nhap sai!");
+                        System.exit(1);
+                    }
+                    if ((tt.charAt(i - 1) >= '0' && tt.charAt(i - 1) <= '9') || tt.charAt(i - 1) == ')') {
+                        tt.replace(i, i, "*");
+                    }
+            }
+            else if (tt.charAt(i) == ')' && i != tt.length() - 1) {
+                    if (tt.charAt(i - 1) == '(') {
+                        System.out.print("Bieu thuc nhap sai!");
+                        System.exit(1);
+                    }
+                    if ((tt.charAt(i + 1) >= '0' && tt.charAt(i + 1) <= '9') || tt.charAt(i + 1) == '(') {
+                        tt.replace(i + 1, i + 1, "*");
+                    }
+            }
+            else if (tt.charAt(i) == '.') {
+                if (i == 0 || i == tt.length() - 1 || tt.charAt(i - 1) < '0' || tt.charAt(i - 1) > '9' || tt.charAt(i + 1) < '0' || tt.charAt(i + 1) > '9') {
+                    System.out.print("Bieu thuc nhap sai!");
+                    System.exit(1);
+                }
+            }
+        }
 
+        for (int i = 0; i < tt.length(); i++) {
+            if (tt.charAt(i) == '(') dem ++;
+            if (tt.charAt(i) == ')') dem --;
+        }
+        if (dem != 0) {
+            System.out.println("Bieu thuc: "+tt);
+            System.out.print("Bieu thuc nhap sai do dem!");
+            System.exit(1);
+        }
+        return tt.toString();
+    }
+
+    public static ArrayList<String> toHauto(String ss) {
+
+        String st = XuLiChuoi(ss);
+        System.out.println("Bieu thuc da nhap: " + st);
         Stack<Character> s = new Stack<>();
         String ht = "";
         ArrayList<String> out = new ArrayList<>();
@@ -41,7 +85,7 @@ public class TinhBT {
                     if (s.empty()) s.push(token);
                     else  {
                         char x = s.peek();
-                        if (x == '(') s.push(token);
+                        if (x == '(' && token != ')') s.push(token);
                         else {
                             if (token == ')') {
                                 while (s.peek() != '(') {
